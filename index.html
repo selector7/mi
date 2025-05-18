@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>步数更新工具</title>
+  <style>
+    /* 简化版CSS，适配图片风格 */
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    input[type="range"] {
+      flex-grow: 1;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .status {
+      color: #666;
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 style="text-align: center; color: #333;">步数更新工具</h2>
+    
+    <div class="form-group">
+      <label>账号：</label>
+      <input type="text" id="account" placeholder="请输入手机号/邮箱">
+    </div>
+
+    <div class="form-group">
+      <label>密码：</label>
+      <input type="password" id="password" placeholder="请输入密码">
+    </div>
+
+    <div class="form-group">
+      <label>步数：</label>
+      <div class="slider-container">
+        <input type="range" min="1" max="98800" id="stepsSlider" value="54188">
+        <span id="stepsValue">54188</span>
+      </div>
+    </div>
+
+    <button onclick="updateSteps()">立即更新</button>
+    <div class="status" id="statusMsg"></div>
+  </div>
+
+  <script>
+    // 前端JS逻辑：调用后端API
+    async function updateSteps() {
+      const account = document.getElementById('account').value;
+      const password = document.getElementById('password').value;
+      const steps = document.getElementById('stepsSlider').value;
+      
+      try {
+        // 调用后端接口
+        const response = await fetch('/api/update-steps', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ account, password, steps })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          document.getElementById('statusMsg').textContent = `成功！当前步数：${steps}`;
+          document.getElementById('statusMsg').style.color = 'green';
+        } else {
+          throw new Error(data.message || '更新失败');
+        }
+      } catch (error) {
+        document.getElementById('statusMsg').textContent = `错误：${error.message}`;
+        document.getElementById('statusMsg').style.color = 'red';
+      }
+    }
+
+    // 滑块联动步数显示
+    document.getElementById('stepsSlider').addEventListener('input', (e) => {
+      document.getElementById('stepsValue').textContent = e.target.value;
+    });
+  </script>
+</body>
+</html>
