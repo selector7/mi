@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>步数更新工具</title>
+</head>
+
+<body>
+  <header>
+    <span class="tag">API v1.0</span>
+    <span class="tag">可用性 99.9%</span>
+    <span class="tag">SLA ≤ 2s</span>
+    <button id="theme-toggle">🌞</button>
+  </header>
+  <nav>
+    <button id="step-update">步数更新</button>
+    <button id="about-tool">关于工具</button>
+  </nav>
+  <main>
+    <div class="tool">
+      <div class="tool-header">
+        <span class="icon">🚶‍</span>
+        <span class="tool-name">动动吗</span>
+        <span class="status">
+          <span class="dot green"></span>
+          API在线
+        </span>
+      </div>
+      <p class="description">更新您的运动步数数据</p>
+      <div class="form-group">
+        <label for="account">
+          <span class="icon">👤</span>
+          账号
+        </label>
+        <input type="text" id="account" placeholder="请输入账号">
+      </div>
+      <div class="form-group">
+        <label for="password">
+          <span class="icon">🔒</span>
+          密码
+        </label>
+        <input type="password" id="password" placeholder="请输入密码">
+      </div>
+      <div class="form-group">
+        <label for="steps">
+          <span class="icon">🚶‍</span>
+          步数
+          <span class="info-icon" title="更多信息">ℹ️</span>
+        </label>
+        <input type="number" id="steps" value="54188">
+        <div class="slider-container">
+          <input type="range" min="1" max="98800" value="54188" id="step-slider">
+          <span class="slider-min">1</span>
+          <span class="slider-max">98,800</span>
+        </div>
+      </div>
+      <button id="submit-button">
+        <span class="icon">🔄</span>
+        动动吧
+      </button>
+    </div>
+  </main>
+  <footer>
+    <span>© 2025 动动吗</span>
+    <span>Powered By ymyuuu</span>
+  </footer>
+  <script src="script.js"></script>
+</body>
+
+</html>
